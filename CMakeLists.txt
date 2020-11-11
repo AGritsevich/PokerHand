@@ -1,10 +1,10 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.16)
 
-set(APP_NAME IsoftBetTask)
-project (${APP_NAME})
+set(APP_NAME PokerHand)
+project (${APP_NAME}) 
 
 if(CMAKE_BUILD_TYPE MATCHES "")
 	message(STATUS "BUILD_TYPE doesn't set, going set Debug")

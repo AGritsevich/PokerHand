@@ -33,7 +33,6 @@ namespace types {
     Rank rank_;
     Suit suit_;
 
-    //Card() : rank_(0), suit_(0) {};
     Card(uint8_t rank, uint8_t suit) {
       rank_ = static_cast<Rank>(rank);
       suit_ = static_cast<Suit>(suit);
@@ -41,5 +40,6 @@ namespace types {
   };
 
   static constexpr uint8_t DECK_SIZE = RANK_COUNT * SUIT_COUNT;
-  using Hand = Card[5];
+  static constexpr uint8_t HAND_SIZE = 5u;
+  using Hand = Card[HAND_SIZE];
 } // namespace types

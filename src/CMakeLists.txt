@@ -7,9 +7,10 @@ set(HEADERS
 set(SRC 
     ${CMAKE_SOURCE_DIR}/src/Poker.cpp
     ${CMAKE_SOURCE_DIR}/src/Deck.cpp
-    ${CMAKE_SOURCE_DIR}/src/Log.cpp
+    #${CMAKE_SOURCE_DIR}/src/Log.cpp
     ${CMAKE_SOURCE_DIR}/src/PockerHand.cpp
-#	${CMAKE_SOURCE_DIR}/src/trade/trade.cc
+    ${CMAKE_SOURCE_DIR}/src/ServerLinux.cpp
+    ${CMAKE_SOURCE_DIR}/src/ServerWindows.cpp
 )
 
 add_executable(${APP_NAME} ${SRC})

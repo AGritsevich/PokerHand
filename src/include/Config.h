@@ -4,5 +4,6 @@
 
 class Config {
 public:
-  static constexpr uint8_t ThreadsCount = 100u;
+  static constexpr uint8_t ThreadsCount = 19;
+  static constexpr uint8_t ServerPath[] = "./socket"; // "\0hidden";
 };

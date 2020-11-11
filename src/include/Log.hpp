@@ -29,9 +29,9 @@ namespace log {
         safe_thread_->join();
       }
     }
-    //template<typename T>
-    //friend Log& operator<<(Log& l, const T& s);
-    friend Log& operator<<(Log& l, const std::string& s);
+    template<typename T>
+    friend Log& operator<<(Log& l, const T& s);
+    //friend Log& operator<<(Log& l, const std::string& s);
 
     //void enable() { enabled_. };
     void disable() { 
@@ -76,8 +76,8 @@ namespace log {
     std::ofstream file_;
   };
 
-  //template<typename T>
-  Log& operator<<(Log& l, const std::string& s) {
+  template<typename T>
+  Log& operator<<(Log& l, const T& s) {
     //l.file_ << s << "\n";
     l.add_message(s);
     return l;
