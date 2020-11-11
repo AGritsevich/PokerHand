@@ -1,0 +1,3 @@
+[submodule "simpleson"]
+	path = simpleson
+	url = https://github.com/gregjesl/simpleson.git
