@@ -1,4 +1,4 @@
-#include "Log.hpp"
+#include "Log.h"
 #include "PockerHand.h"
 #include <Deck.h>
 #include "..\simpleson\json.h"
@@ -41,9 +41,10 @@ bool PockerHand::isStraight(types::Hand one) {
 
 void PockerHand::proceed(std::string message) {
   using namespace types;
-  Deck new_deck();
+  Deck new_deck;
   // Parse the input
-  std::vector<std::vector<uint8_t>> cards = static_cast<std::vector<uint8_t>(json::jarray::parse(message));
+  json::jobject result = json::jobject::parse(message);
+  std::vector<std::vector<uint8_t>> cards;// = static_cast<std::vector<uint8_t>(json::jobject::parse(result));
 
   Hand hand;
   uint8_t ind = 0;
@@ -53,11 +54,18 @@ void PockerHand::proceed(std::string message) {
 
   new_deck.shuffle(); // just for be
 
-  if (isStraight(hand)) {
-    log::lg << "Straight";
+  bool is_flash = isStraight(hand);
+  bool is_straight = isStraight(hand);
+
+  if (is_flash && is_straight) {
+    lg.print("It's Flash straight");
   }
 
-  if (isFlash(hand)) {
-    log::lg << "Flash";
+  if (is_flash) {
+    lg.print("It's Straight");
+  }
+
+  if (is_straight) {
+    lg.print("It's Flash");
   }
 }

@@ -5,13 +5,13 @@
 #include <sys/un.h>
 #include <stdlib.h>
 
-#include "Log.hpp"
+#include "Log.h"
 #include "ServerLinux.h"
 #include "Config.h"
 
 ServerLinux::ServerLinux(std::string adress) {
   if (socket(AF_UNIX, SOCK_STREAM, 0) == -1) {
-    log::lg << "Fail create socket";
+    lg << "Fail create socket";
     throw std::string("Fail create socket\n");
   }
 
@@ -20,11 +20,12 @@ ServerLinux::ServerLinux(std::string adress) {
   strncpy(addr.sun_path, Config::ServerPath , sizeof(Config::ServerPath));
 
   if (bind(fd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
-    log::lg << "Fail bind";
+    lg << "Fail bind";
     throw std::string("Fail bind");
   }
 
-  messages_threads_.reset(new std::thread(ServerLinux::listen, nullptr, 0));
+  messages_threads_.reset(new std::thread(ServerLinux::listen, this));
+  messages_threads_->join();
 
 }
 
@@ -45,7 +46,7 @@ void ServerLinux::listen() {
   std::array<uint8_t, 100> buf;
 
   if (listen(fd, 5) == -1) {
-    log::lg << "Fail listen";
+    lg << "Fail listen";
     throw std::string("Fail listen");
   }
 
@@ -53,21 +54,21 @@ void ServerLinux::listen() {
     int32_t cl = 0;
     std::string mes;
     if ((cl = accept(fd, NULL, NULL)) == -1) {
-      log::lg << "Warning attept accept was unsuccesful";
+      lg << "Warning attept accept was unsuccesful";
       continue;
     }
 
     while ((rc = read(cl, buf.data(), data.size())) > 0) {
       mes += std::string(buf.data, data.size());
-      log::lg << "read " << rc << "bytes: " << buf;
+      lg << "read " << rc << "bytes: " << buf;
     }
 
     if (rc == -1) {
-      log::lg << "Fail read accepted message";
+      lg << "Fail read accepted message";
       throw("Fail read accepted message");
     }
     else if (rc == 0) {
-      log::lg << "Info: EOF";
+      lg << "Info: EOF";
       add_message(mes);
       close(cl);
     }
@@ -86,7 +87,7 @@ std::string ServerLinux::get_message() {
 
   if (!queue_len()) cv_messages_.wait(lock);
 
-  auto copy_mess = messages_.front();
+  std::string copy_mess = messages_.front();
   messages_.pop();
   return copy_mess;
 }

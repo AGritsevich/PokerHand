@@ -4,7 +4,8 @@
 namespace types {
   constexpr auto RANK_START_LINE = __LINE__;
   enum class Rank : uint8_t {
-    Ace = 1,
+    none = 0,
+    Ace,
     Two,
     Three,
     Four,
@@ -18,25 +19,31 @@ namespace types {
     Queen,
     King
   };
-  constexpr auto RANK_COUNT = __LINE__ - RANK_START_LINE - 3;
+  constexpr auto RANK_COUNT = __LINE__ - RANK_START_LINE - 4;
 
   constexpr auto SUIT_START_LINE = __LINE__;
   enum class Suit : uint8_t {
-    Hearts = 1,
+    none = 0,
+    Hearts,
     Diamonds,
     Clubs,
     Spades
   };
-  constexpr auto SUIT_COUNT = __LINE__ - SUIT_START_LINE - 3;
+  constexpr auto SUIT_COUNT = __LINE__ - SUIT_START_LINE - 4;
   
   struct Card {
     Rank rank_;
     Suit suit_;
 
+    Card() {
+      this->rank_ = Rank::none;
+      this->suit_ = Suit::none;
+    };
+
     Card(uint8_t rank, uint8_t suit) {
-      rank_ = static_cast<Rank>(rank);
-      suit_ = static_cast<Suit>(suit);
-    }
+      this->rank_ = static_cast<Rank>(rank);
+      this->suit_ = static_cast<Suit>(suit);
+    };
   };
 
   static constexpr uint8_t DECK_SIZE = RANK_COUNT * SUIT_COUNT;

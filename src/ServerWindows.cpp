@@ -1,14 +1,37 @@
 #ifndef __linux__ 
 #include "ServerWindows.h"
-#include "Log.hpp"
+#include "Log.h"
+
+ServerWindows::ServerWindows() {
+  lg.print("ServerWindows::ServerWindows: Not implemented");
+}
+
+ServerWindows::~ServerWindows() {
+  lg.print("ServerWindows::~ServerWindows: Not implemented");
+}
+
+std::string ServerWindows::get_message() {
+  lg.print("ServerWindows::get_message: Not implemented");
+  return "Not implemented";
+}
+
+
+void ServerWindows::add_message(std::string mes) {
+  lg.print("ServerWindows::add_message: Not implemented");
+}
+
+uint32_t ServerWindows::queue_len() {
+  lg.print("ServerWindows::queue_len: Not implemented");
+  return 0;
+}
 
 void ServerWindows::listen() {
   while (isEnabled()) {
-    log::lg << "Not implemented";
+    lg.print("ServerWindows::listen: Not implemented");
   }
-};
+}
 
-bool ServerWindows::finish() {
-  log::lg << "Not implemented";
-};
-#endif /* LINUX */
+void ServerWindows::finish() {
+  lg.print("ServerWindows::finish: Not implemented");
+}
+#endif /* WINDOWS */
