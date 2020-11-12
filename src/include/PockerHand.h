@@ -9,7 +9,7 @@
 
 class PockerHand {
 public:
-  PockerHand();
+  PockerHand(const std::string& req );
   ~PockerHand() {};
 
   void proceed(std::string message);
@@ -19,6 +19,7 @@ public:
   inline bool is_enabled() const { return enabled_; };
 
 private:
+  PockerHand() {};
   std::atomic<bool> enabled_;
   //std::mutex collection_lock_;
 

@@ -1,5 +1,10 @@
 #include "Log.h"
 
+#include <ctime>
+#include <chrono>
+
+Log lg;
+
 Log::Log()
   : enabled_(true) {
   using std::chrono::system_clock;
@@ -8,8 +13,8 @@ Log::Log()
   std::string file_name = "pocker_" + *ctime(&tt); // TODO ctime to ctime_s
   file_name += ".log";
   file_.open(file_name, std::ofstream::out | std::ofstream::app);
-  safe_thread_.reset(new std::thread(&Log::proceed, this));
-  safe_thread_->join();
+  //safe_thread_.reset(new std::thread(&Log::proceed, this));
+  //safe_thread_->join();
 }
 
 Log::~Log() {

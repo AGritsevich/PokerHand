@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 #include <string>
 #include <deque>
-#include <memory>
-#include <thread>
 
 #include "Log.h"
 #include "PockerHand.h"
@@ -13,8 +11,7 @@
 int main(int argc, char* argv[]) {
   try{
     std::unique_ptr<ServerProxy> server;
-    PockerHand hand;
-    std::deque<std::unique_ptr<std::thread>> list;
+    std::deque<PockerHand> list;
 
 #ifndef __linux__ // win
     server.reset(new ServerWindows());
@@ -27,12 +24,15 @@ int main(int argc, char* argv[]) {
     while (1) {
       auto request = server->get_message(); // sleep & wait here
 
-      list.emplace_back(std::unique_ptr<std::thread>((new std::thread(&PockerHand::proceed, request, hand))));
+      list.emplace_back(PockerHand(request));
     }
   }
   catch (std::string what) {
     std::cout << what << std::endl;
     lg.print(std::string("Start fail with: ") + what);
+  }
+  catch (...) {
+    std::cout << "crash" << std::endl;
   }
   
 }

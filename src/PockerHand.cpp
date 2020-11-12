@@ -3,8 +3,11 @@
 #include <Deck.h>
 #include "..\simpleson\json.h"
 
-PockerHand::PockerHand() {
+PockerHand::PockerHand(const std::string& req) {
   enabled_ = true;
+
+  thread_.reset(new std::thread(&PockerHand::proceed, req, this));
+  thread_->join();
 }
 
 void PockerHand::disable() {
@@ -43,7 +46,7 @@ void PockerHand::proceed(std::string message) {
   using namespace types;
   Deck new_deck;
   // Parse the input
-  json::jobject result = json::jobject::parse(message);
+  //json::jobject result = json::jobject::parse(message);
   std::vector<std::vector<uint8_t>> cards;// = static_cast<std::vector<uint8_t>(json::jobject::parse(result));
 
   Hand hand;
@@ -68,4 +71,6 @@ void PockerHand::proceed(std::string message) {
   if (is_straight) {
     lg.print("It's Flash");
   }
+
+  disable();
 }

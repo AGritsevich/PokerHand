@@ -1,19 +1,19 @@
 #pragma once
 
-#include <atomic>
+#include <queue>
 #include <memory>
+#include <thread>
+#include <atomic>
 #include <mutex>
 #include <condition_variable>
-#include <queue>
 #include <fstream>
-#include <ctime>
-#include <chrono>
+
 
 class Log {
 public:
   Log();
   ~Log();
-  inline void print(const std::string& ll);
+  void print(const std::string& ll);
   void disable();
 
 private:
@@ -31,4 +31,4 @@ private:
   std::ofstream file_;
 };
 
-static Log lg;
+extern Log lg;

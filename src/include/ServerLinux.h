@@ -12,18 +12,21 @@
 
 class ServerLinux : public ServerProxy {
 public:
-  ServerLinux() =default;
+  ServerLinux();
+  ~ServerLinux();
 
   void listen() override;
   void finish() override {};
   std::string get_message();
   void add_message(std::string mes);
-  auto queue_len();
+  uint32_t queue_len();
 
 private:
   std::queue<std::string> messages_;
   std::mutex messages_lock_;
   std::condition_variable cv_messages_;
   std::unique_ptr<std::thread> messages_threads_;
+
+  int32_t socket_fd_;
 };
 #endif /* LINUX */
