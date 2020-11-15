@@ -1,12 +1,12 @@
 #include "Log.h"
 #include "PockerHand.h"
-#include <Deck.h>
-#include "..\simpleson\json.h"
+#include "Deck.h"
+#include "../simpleson/json.h"
 
 PockerHand::PockerHand(const std::string& req) {
   enabled_ = true;
 
-  thread_.reset(new std::thread(&PockerHand::proceed, req, this));
+  thread_.reset(new std::thread(&PockerHand::proceed, this, req));
   thread_->join();
 }
 
@@ -30,12 +30,12 @@ int32_t compare(const void* a, const void* b) {
   return (*(int8_t*)a - *(int8_t*)b); 
 }
 
-bool PockerHand::isStraight(types::Hand one) {
+bool PockerHand::isStraight(types::Hand& one) {
   using namespace types;
 
   std::qsort(one, sizeof(Hand) / sizeof(Card), sizeof(Card), compare);
 
-  for (auto i = 1; i < (sizeof(one) / sizeof(Card)); i++) {
+  for (auto i = 1; i < (sizeof(Hand) / sizeof(Card)); i++) {
     if (one[i-1].rank_ != static_cast<Rank>(static_cast<uint8_t>(one[i].rank_) + 1))
       return false;
   }
