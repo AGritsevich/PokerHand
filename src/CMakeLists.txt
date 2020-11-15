@@ -2,6 +2,7 @@
 
 set(HEADERS
     ${CMAKE_SOURCE_DIR}/src/include/
+    ${CMAKE_SOURCE_DIR}/simleson/
 )
 
 set(SRC 
