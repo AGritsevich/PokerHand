@@ -15,8 +15,8 @@ public:
   ~PockerHand() {};
 
   void proceed(std::string message);
-  bool isFlash(const types::Hand& one);
-  bool isStraight(types::Hand& one); // Why not 'Street'?
+  bool isFlush(const types::Hand& one);
+  bool isStraight(types::Hand& one);
   void disable();
   inline bool is_enabled() const { return enabled_; };
 

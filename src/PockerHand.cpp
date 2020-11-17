@@ -16,7 +16,7 @@ void PockerHand::disable() {
   }
 }
 
-bool PockerHand::isFlash(const types::Hand& one) {
+bool PockerHand::isFlush(const types::Hand& one) {
   using namespace types;
   
   for (auto i = 1; i < (sizeof(one) / sizeof(Card)); i++) {
@@ -57,7 +57,7 @@ void PockerHand::proceed(std::string message) {
 
   new_deck.shuffle(); // just for be
 
-  bool is_flash = isStraight(hand);
+  bool is_flash = isFlush(hand);
   bool is_straight = isStraight(hand);
 
   if (is_flash && is_straight) {
